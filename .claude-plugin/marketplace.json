@@ -16,6 +16,15 @@
       "skills": [
         "./skills/react-pdf"
       ]
+    },
+    {
+      "name": "react-pdf-tool",
+      "description": "Interactive AI PDF-generation agent using AnthropicFoundry tool use with run_tsx and run_command tools",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/react-pdf-tool"
+      ]
     }
   ]
 }
