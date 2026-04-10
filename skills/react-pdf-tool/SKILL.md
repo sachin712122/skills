@@ -75,7 +75,7 @@ python skills/react-pdf-tool/assets/react_pdf_tool.py
 ```
 React-PDF AI assistant  (type 'exit' to quit)
 
-You: Create a one-page invoice PDF for Acme Corp, $1 200 for consulting
+You: Create a one-page invoice PDF for Acme Corp, $1,200 for consulting
 
 [Tool] run_command → {"command": "npm install react @react-pdf/renderer"}
 [Tool output]
@@ -121,5 +121,5 @@ stderr.  Used for package installation, file inspection, PDF-to-image conversion
 
 ## Security Note
 
-`run_command` executes arbitrary shell commands.  Run this script only in trusted,
-isolated environments (containers, VMs, sandboxes).
+`run_command` uses `shlex.split()` to tokenize commands safely (no shell expansion).
+Run this script only in trusted, isolated environments (containers, VMs, sandboxes).

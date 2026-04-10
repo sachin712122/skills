@@ -21,6 +21,7 @@ ANTHROPIC_MODEL     – Deployment / model name (e.g. "claude-3-5-sonnet")
 
 import asyncio
 import os
+import shlex
 import subprocess
 import tempfile
 
@@ -42,6 +43,7 @@ client = AnthropicFoundry(api_key=api_key, base_url=base_url)
 
 def run_tsx(code: str) -> str:
     """Write *code* to a temp .tsx file and execute it with `npx tsx`."""
+    tmp_path = None
     try:
         with tempfile.NamedTemporaryFile(suffix=".tsx", mode="w", delete=False) as f:
             f.write(code)
@@ -65,11 +67,10 @@ def run_tsx(code: str) -> str:
 
 
 def run_command(command: str) -> str:
-    """Run an arbitrary shell command and return combined stdout + stderr."""
+    """Run a shell command and return combined stdout + stderr."""
     try:
         result = subprocess.run(
-            command,
-            shell=True,
+            shlex.split(command),
             capture_output=True,
             text=True,
             timeout=60,
@@ -107,7 +108,8 @@ TOOLS = [
     {
         "name": "run_command",
         "description": (
-            "Run a shell command and return combined stdout + stderr. "
+            "Run a shell command (parsed safely without a shell) and return combined "
+            "stdout + stderr. "
             "Use for installing npm packages, listing files, converting PDFs to "
             "preview images with pdftoppm or PyMuPDF, etc."
         ),
